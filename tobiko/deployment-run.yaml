@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: executors-hybrid-executors-run
-  namespace: ${neulander_namespace}
+  namespace: ${tobiko_namespace}
   labels:
     app.kubernetes.io/instance: executors
     app.kubernetes.io/name: hybrid-executors
