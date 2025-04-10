@@ -2,11 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: executors-hybrid-executors-run
-  namespace: "default"
   labels:
     app.kubernetes.io/instance: executors
     app.kubernetes.io/name: hybrid-executors
-    app.kubernetes.io/version: 1.0.0
     app.kubernetes.io/component: run-executor
 spec:
   selector:
@@ -22,20 +20,22 @@ spec:
       labels:
         app.kubernetes.io/instance: executors
         app.kubernetes.io/name: hybrid-executors
-        app.kubernetes.io/version: 1.0.0
         app.kubernetes.io/component: run-executor
     spec:
       # serviceAccountName: default
       containers:
         - name: run-executor
           image: "tobikodata/tcloud:latest"
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           args:
             - "executor"
             - "run"
           env:
             - name: TCLOUD_URL
-              value: "https://cloud.tobikodata.com/sqlmesh/your-organization/your-project"
+              valueFrom:
+                secretKeyRef:
+                  name: executors-hybrid-executors-secrets
+                  key: TCLOUD_URL
             - name: TCLOUD_CLIENT_ID
               valueFrom:
                 secretKeyRef:

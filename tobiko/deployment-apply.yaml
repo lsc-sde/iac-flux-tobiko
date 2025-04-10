@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/instance: executors
     app.kubernetes.io/name: hybrid-executors
-    app.kubernetes.io/version: 1.0.0
     app.kubernetes.io/component: apply-executor
 spec:
   selector:
@@ -25,8 +24,7 @@ spec:
         app.kubernetes.io/version: 1.0.0
         app.kubernetes.io/component: apply-executor
     spec:
-      
-      serviceAccountName: default
+      # serviceAccountName: default
       containers:
         - name: apply-executor
           image: "tobikodata/tcloud:latest"
@@ -36,7 +34,10 @@ spec:
             - "apply"
           env:
             - name: TCLOUD_URL
-              value: "https://cloud.tobikodata.com/sqlmesh/your-organization/your-project"
+              valueFrom:
+                secretKeyRef:
+                  name: executors-hybrid-executors-secrets
+                  key: TCLOUD_URL
             - name: TCLOUD_CLIENT_ID
               valueFrom:
                 secretKeyRef:
