@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: executors-hybrid-executors-apply
+  namespace: ${neulander_namespace}
+
   labels:
     app.kubernetes.io/instance: executors
     app.kubernetes.io/name: hybrid-executors
