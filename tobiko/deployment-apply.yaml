@@ -51,6 +51,14 @@ spec:
                   key: TCLOUD_CLIENT_SECRET
             - name: SQLMESH__DEFAULT_GATEWAY
               value: "databricks"
+            - name: SQLMESH__GATEWAYS__DATABRICKS__CONNECTION__CATALOG
+              value: "rde_development"
+            - name: SQLMESH__GATEWAYS__DATABRICKS__CONNECTION__SERVER_HOSTNAME
+              value: "adb-373128615800175.15.azuredatabricks.net"
+            - name: SQLMESH__GATEWAYS__DATABRICKS__CONNECTION__HTTP_PATH
+              value: "/sql/1.0/warehouses/4f4e66bc9587aff1"
+            - name: SQLMESH__GATEWAYS__DATABRICKS__CONNECTION__TYPE
+              value: "databricks"
           readinessProbe:
             exec:
               command:
