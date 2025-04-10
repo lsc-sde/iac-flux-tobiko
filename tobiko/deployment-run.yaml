@@ -5,10 +5,8 @@ metadata:
   namespace: "default"
   labels:
     app.kubernetes.io/instance: executors
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: hybrid-executors
     app.kubernetes.io/version: 1.0.0
-    helm.sh/chart: hybrid-executors-1.0.1
     app.kubernetes.io/component: run-executor
 spec:
   selector:
@@ -23,17 +21,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/instance: executors
-        app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: hybrid-executors
         app.kubernetes.io/version: 1.0.0
-        helm.sh/chart: hybrid-executors-1.0.1
         app.kubernetes.io/component: run-executor
-      annotations:
-        created_at: "2025-04-10T13:57:51Z"
     spec:
-      
-      serviceAccountName: default
-      initContainers:
+      # serviceAccountName: default
       containers:
         - name: run-executor
           image: "tobikodata/tcloud:latest"
@@ -45,16 +37,17 @@ spec:
             - name: TCLOUD_URL
               value: "https://cloud.tobikodata.com/sqlmesh/your-organization/your-project"
             - name: TCLOUD_CLIENT_ID
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: executors-hybrid-executors-secrets
+                  key: TCLOUD_CLIENT_ID
             - name: TCLOUD_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: executors-hybrid-executors-secrets
                   key: TCLOUD_CLIENT_SECRET
-            
             - name: SQLMESH__DEFAULT_GATEWAY
-              value: "UNDEFINED"
-          envFrom:
+              value: "databricks"
           readinessProbe:
             exec:
               command:
@@ -73,6 +66,6 @@ spec:
               ephemeral-storage: 10Gi
               memory: 4Gi
             requests:
-              cpu: "1"
+              cpu: "0.5"
               ephemeral-storage: 10Gi
               memory: 2Gi
