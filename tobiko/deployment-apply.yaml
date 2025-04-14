@@ -64,18 +64,18 @@ spec:
                   key: SQLMESH__GATEWAYS__DATABRICKS__CONNECTION__ACCESS_TOKEN
             - name: SQLMESH__GATEWAYS__DATABRICKS__CONNECTION__TYPE
               value: "databricks"
-          readinessProbe:
-            exec:
-              command:
-                - /app/pex
-                - executor
-                - apply
-                - --check
-            initialDelaySeconds: 0
-            periodSeconds: 10
-            timeoutSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
+          # readinessProbe:
+          #   exec:
+          #     command:
+          #       - /app/pex
+          #       - executor
+          #       - apply
+          #       - --check
+          #   initialDelaySeconds: 0
+          #   periodSeconds: 10
+          #   timeoutSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 3
           resources:
             limits:
               cpu: "2"
